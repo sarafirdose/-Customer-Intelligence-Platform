@@ -1,0 +1,6 @@
+{
+  "churn_weight": 0.30,
+  "ltv_weight": 0.30,
+  "tenure_weight": 0.20,
+  "services_weight": 0.20
+}
