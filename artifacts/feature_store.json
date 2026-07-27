@@ -1,0 +1,55 @@
+[
+  {
+    "feature_name": "total_services",
+    "type": "integer",
+    "description": "Sum of active communication and security add-on services.",
+    "created_from": [
+      "phone_service",
+      "multiple_lines",
+      "online_security",
+      "online_backup",
+      "device_protection",
+      "tech_support",
+      "streaming_tv",
+      "streaming_movies"
+    ],
+    "used_by_model": true
+  },
+  {
+    "feature_name": "tenure_group",
+    "type": "categorical",
+    "description": "Binned tenure segments (0-12m, 12-24m, 24-48m, 48-60m, 60m+).",
+    "created_from": [
+      "tenure_months"
+    ],
+    "used_by_model": true
+  },
+  {
+    "feature_name": "is_auto_payment",
+    "type": "binary",
+    "description": "Flag indicating automatic billing methods (Credit card or Bank transfer).",
+    "created_from": [
+      "payment_method"
+    ],
+    "used_by_model": true
+  },
+  {
+    "feature_name": "charges_ratio",
+    "type": "float",
+    "description": "Monthly charges divided by tenure_months plus one.",
+    "created_from": [
+      "monthly_charges",
+      "tenure_months"
+    ],
+    "used_by_model": true
+  },
+  {
+    "feature_name": "total_charges_log",
+    "type": "float",
+    "description": "Natural log transformation of TotalCharges to handle skewness.",
+    "created_from": [
+      "total_charges"
+    ],
+    "used_by_model": true
+  }
+]

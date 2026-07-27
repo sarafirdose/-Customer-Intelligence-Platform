@@ -1,9 +1,9 @@
 {
-  "initial_rows": 7043,
-  "final_rows": 7043,
+  "initial_rows": 2,
+  "final_rows": 2,
   "dropped_rows": 0,
   "duplicates_removed": 0,
-  "missing_total_charges_imputed": 11,
+  "missing_total_charges_imputed": 0,
   "invalid_churn_dropped": 0,
   "columns_cleaned": [
     "customer_id",

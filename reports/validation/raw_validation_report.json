@@ -1,4 +1,13 @@
 {
-  "status": "success",
-  "failures_count": 0
+  "status": "failed",
+  "error_message": "{\n    \"DATA\": {\n        \"DATAFRAME_CHECK\": [\n            {\n                \"schema\": null,\n                \"column\": \"gender\",\n                \"check\": \"isin(['Female', 'Male'])\",\n                \"error\": \"Column 'gender' failed element-wise validator number 0: isin(['Female', 'Male']) failure cases: Unknown\"\n            }\n        ]\n    }\n}",
+  "failures_count": 1,
+  "failures": [
+    {
+      "column": "gender",
+      "check": "isin(['Female', 'Male'])",
+      "failure_value": "Unknown",
+      "index": "0"
+    }
+  ]
 }

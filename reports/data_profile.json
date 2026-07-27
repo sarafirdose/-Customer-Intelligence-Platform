@@ -1,9 +1,9 @@
 {
   "dataset_shape": {
-    "rows": 7043,
+    "rows": 2,
     "columns": 21
   },
-  "cells_count": 147903,
+  "cells_count": 42,
   "missing_values": {
     "total_missing": 0,
     "missing_percentage": 0.0,
@@ -37,126 +37,102 @@
   },
   "numeric_summaries": {
     "SeniorCitizen": {
-      "mean": 0.1621468124378816,
+      "mean": 0.5,
       "min": 0.0,
       "max": 1.0,
-      "std": 0.3686116056100131,
+      "std": 0.7071067811865476,
       "missing_count": 0
     },
     "tenure": {
-      "mean": 32.37114865824223,
-      "min": 0.0,
-      "max": 72.0,
-      "std": 24.55948102309446,
+      "mean": 18.0,
+      "min": 12.0,
+      "max": 24.0,
+      "std": 8.48528137423857,
       "missing_count": 0
     },
     "MonthlyCharges": {
-      "mean": 64.76169246059918,
-      "min": 18.25,
-      "max": 118.75,
-      "std": 30.090047097678493,
+      "mean": 70.425,
+      "min": 45.85,
+      "max": 95.0,
+      "std": 34.75429829531881,
+      "missing_count": 0
+    },
+    "TotalCharges": {
+      "mean": 1415.1,
+      "min": 550.2,
+      "max": 2280.0,
+      "std": 1223.1533100964898,
       "missing_count": 0
     }
   },
   "categorical_summaries": {
     "customerID": {
-      "7590-VHVEG": 1,
-      "5575-GNVDE": 1,
-      "3668-QPYBK": 1,
-      "7795-CFOCW": 1,
-      "9237-HQITU": 1,
-      "9305-CDSKC": 1,
-      "1452-KIOVK": 1,
-      "6713-OKOMC": 1,
-      "7892-POOKP": 1,
-      "6388-TABGU": 1
+      "9999-INGEST1": 1,
+      "9999-INGEST2": 1
     },
     "gender": {
-      "Male": 3555,
-      "Female": 3488
+      "Female": 1,
+      "Male": 1
     },
     "Partner": {
-      "No": 3641,
-      "Yes": 3402
+      "Yes": 1,
+      "No": 1
     },
     "Dependents": {
-      "No": 4933,
-      "Yes": 2110
+      "No": 1,
+      "Yes": 1
     },
     "PhoneService": {
-      "Yes": 6361,
-      "No": 682
+      "Yes": 1,
+      "No": 1
     },
     "MultipleLines": {
-      "No": 3390,
-      "Yes": 2971,
-      "No phone service": 682
+      "No": 1,
+      "No phone service": 1
     },
     "InternetService": {
-      "Fiber optic": 3096,
-      "DSL": 2421,
-      "No": 1526
+      "DSL": 1,
+      "Fiber optic": 1
     },
     "OnlineSecurity": {
-      "No": 3498,
-      "Yes": 2019,
-      "No internet service": 1526
+      "Yes": 1,
+      "No": 1
     },
     "OnlineBackup": {
-      "No": 3088,
-      "Yes": 2429,
-      "No internet service": 1526
+      "No": 1,
+      "Yes": 1
     },
     "DeviceProtection": {
-      "No": 3095,
-      "Yes": 2422,
-      "No internet service": 1526
+      "Yes": 1,
+      "No": 1
     },
     "TechSupport": {
-      "No": 3473,
-      "Yes": 2044,
-      "No internet service": 1526
+      "No": 1,
+      "Yes": 1
     },
     "StreamingTV": {
-      "No": 2810,
-      "Yes": 2707,
-      "No internet service": 1526
+      "Yes": 1,
+      "No": 1
     },
     "StreamingMovies": {
-      "No": 2785,
-      "Yes": 2732,
-      "No internet service": 1526
+      "No": 1,
+      "Yes": 1
     },
     "Contract": {
-      "Month-to-month": 3875,
-      "Two year": 1695,
-      "One year": 1473
+      "Month-to-month": 1,
+      "Two year": 1
     },
     "PaperlessBilling": {
-      "Yes": 4171,
-      "No": 2872
+      "Yes": 1,
+      "No": 1
     },
     "PaymentMethod": {
-      "Electronic check": 2365,
-      "Mailed check": 1612,
-      "Bank transfer (automatic)": 1544,
-      "Credit card (automatic)": 1522
-    },
-    "TotalCharges": {
-      "20.2": 11,
-      " ": 11,
-      "19.75": 9,
-      "19.9": 8,
-      "20.05": 8,
-      "19.65": 8,
-      "45.3": 7,
-      "19.55": 7,
-      "20.15": 6,
-      "19.45": 6
+      "Electronic check": 1,
+      "Mailed check": 1
     },
     "Churn": {
-      "No": 5174,
-      "Yes": 1869
+      "No": 1,
+      "Yes": 1
     }
   }
 }

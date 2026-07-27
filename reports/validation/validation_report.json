@@ -1,4 +1,19 @@
 {
-  "status": "success",
-  "failures_count": 0
+  "status": "failed",
+  "error_message": "{\n    \"DATA\": {\n        \"SERIES_CONTAINS_DUPLICATES\": [\n            {\n                \"schema\": null,\n                \"column\": \"customer_id\",\n                \"check\": \"field_uniqueness\",\n                \"error\": \"series 'customer_id' contains duplicate values:0    2222-MOCK1    2222-MOCKName: customer_id, dtype: str\"\n            }\n        ]\n    }\n}",
+  "failures_count": 2,
+  "failures": [
+    {
+      "column": "customer_id",
+      "check": "field_uniqueness",
+      "failure_value": "2222-MOCK",
+      "index": "0"
+    },
+    {
+      "column": "customer_id",
+      "check": "field_uniqueness",
+      "failure_value": "2222-MOCK",
+      "index": "1"
+    }
+  ]
 }
