@@ -1,0 +1,31 @@
+{
+  "initial_rows": 7043,
+  "final_rows": 7043,
+  "dropped_rows": 0,
+  "duplicates_removed": 0,
+  "missing_total_charges_imputed": 11,
+  "invalid_churn_dropped": 0,
+  "columns_cleaned": [
+    "customer_id",
+    "gender",
+    "senior_citizen",
+    "partner",
+    "dependents",
+    "tenure_months",
+    "phone_service",
+    "multiple_lines",
+    "internet_service",
+    "online_security",
+    "online_backup",
+    "device_protection",
+    "tech_support",
+    "streaming_tv",
+    "streaming_movies",
+    "contract_type",
+    "paperless_billing",
+    "payment_method",
+    "monthly_charges",
+    "total_charges",
+    "churn"
+  ]
+}

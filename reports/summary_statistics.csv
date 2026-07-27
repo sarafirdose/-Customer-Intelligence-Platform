@@ -1,0 +1,22 @@
+,count,unique,top,freq,mean,std,min,25%,50%,75%,max
+customer_id,7043,7043,7590-VHVEG,1,,,,,,,
+gender,7043,2,Male,3555,,,,,,,
+senior_citizen,7043.0,,,,0.1621468124378816,0.3686116056100131,0.0,0.0,0.0,0.0,1.0
+partner,7043,2,No,3641,,,,,,,
+dependents,7043,2,No,4933,,,,,,,
+tenure_months,7043.0,,,,32.37114865824223,24.55948102309446,0.0,9.0,29.0,55.0,72.0
+churn,7043.0,,,,0.2653698707936959,0.441561305121947,0.0,0.0,0.0,1.0,1.0
+contract_type,7043,3,Month-to-month,3875,,,,,,,
+paperless_billing,7043,2,Yes,4171,,,,,,,
+payment_method,7043,4,Electronic check,2365,,,,,,,
+phone_service,7043,2,Yes,6361,,,,,,,
+multiple_lines,7043,3,No,3390,,,,,,,
+internet_service,7043,3,Fiber optic,3096,,,,,,,
+online_security,7043,3,No,3498,,,,,,,
+online_backup,7043,3,No,3088,,,,,,,
+device_protection,7043,3,No,3095,,,,,,,
+tech_support,7043,3,No,3473,,,,,,,
+streaming_tv,7043,3,No,2810,,,,,,,
+streaming_movies,7043,3,No,2785,,,,,,,
+monthly_charges,7043.0,,,,64.76169246059918,30.090047097678493,18.25,35.5,70.35,89.85,118.75
+total_charges,7043.0,,,,2279.7343035638223,2266.7944696890213,0.0,398.55,1394.55,3786.6,8684.8

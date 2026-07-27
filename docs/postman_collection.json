@@ -1,0 +1,119 @@
+{
+  "info": {
+    "_postman_id": "8c08a98b-70c8-472d-8bfe-30cbb37a6bde",
+    "name": "Customer Intelligence Platform - API v1",
+    "description": "Postman Collection for testing version 1 endpoints of the Customer Churn & LTV Prediction Platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "System Health Monitor",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://{{host}}:{{port}}/api/v1/health",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "api",
+            "v1",
+            "health"
+          ]
+        },
+        "description": "Verifies service health and databases connection status."
+      },
+      "response": []
+    },
+    {
+      "name": "Predict Customer Churn & LTV",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_id\": \"1234-ABCD\",\n  \"tenure_months\": 24,\n  \"monthly_charges\": 64.85,\n  \"total_charges\": 1556.40,\n  \"contract_type\": \"Two year\",\n  \"paperless_billing\": \"Yes\",\n  \"internet_service\": \"DSL\",\n  \"tech_support\": \"Yes\"\n}"
+        },
+        "url": {
+          "raw": "http://{{host}}:{{port}}/api/v1/predict",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "api",
+            "v1",
+            "predict"
+          ]
+        },
+        "description": "Scores customer metrics to evaluate churn risk and LTV expectations."
+      },
+      "response": []
+    },
+    {
+      "name": "Explain Churn Prediction",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://{{host}}:{{port}}/api/v1/explain/1234-ABCD",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "api",
+            "v1",
+            "explain",
+            "1234-ABCD"
+          ]
+        },
+        "description": "Fetches SHAP value explanation weights for a customer."
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "host",
+      "value": "localhost",
+      "type": "string"
+    },
+    {
+      "key": "port",
+      "value": "8000",
+      "type": "string"
+    }
+  ]
+}
