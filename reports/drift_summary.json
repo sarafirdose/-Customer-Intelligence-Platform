@@ -1,0 +1,168 @@
+{
+  "run_at": "2026-07-28T13:55:42.611989+00:00",
+  "dataset_rows": 200,
+  "overall_severity": "Critical",
+  "psi_warning_threshold": 0.1,
+  "psi_critical_threshold": 0.25,
+  "numerical_drift": [
+    {
+      "feature": "tenure_months",
+      "psi": 2.027799,
+      "severity": "Critical",
+      "baseline_mean": 32.3711,
+      "production_mean": 31.5296,
+      "baseline_std": 24.5595,
+      "production_std": 13.1247
+    },
+    {
+      "feature": "monthly_charges",
+      "psi": 0.021273,
+      "severity": "Normal",
+      "baseline_mean": 64.7617,
+      "production_mean": 66.0867,
+      "baseline_std": 30.09,
+      "production_std": 27.8202
+    },
+    {
+      "feature": "total_charges",
+      "psi": 3.724305,
+      "severity": "Critical",
+      "baseline_mean": 2279.7343,
+      "production_mean": 2218.7886,
+      "baseline_std": 2266.7945,
+      "production_std": 997.5918
+    },
+    {
+      "feature": "charges_ratio",
+      "psi": 7.845579,
+      "severity": "Critical",
+      "baseline_mean": 5.7706,
+      "production_mean": 5.7283,
+      "baseline_std": 8.7224,
+      "production_std": 2.026
+    },
+    {
+      "feature": "total_services",
+      "psi": 7.0081,
+      "severity": "Critical",
+      "baseline_mean": 3.3629,
+      "production_mean": 4.02,
+      "baseline_std": 2.062,
+      "production_std": 1.9999
+    },
+    {
+      "feature": "total_charges_log",
+      "psi": 0.406966,
+      "severity": "Critical",
+      "baseline_mean": 6.9325,
+      "production_mean": 6.9629,
+      "baseline_std": 1.5694,
+      "production_std": 0.9553
+    }
+  ],
+  "categorical_drift": [
+    {
+      "feature": "contract_type",
+      "max_shift": 0.024808,
+      "severity": "Normal",
+      "categories": {
+        "Month-to-month": {
+          "baseline_pct": 0.5502,
+          "production_pct": 0.575,
+          "shift": 0.0248
+        },
+        "One year": {
+          "baseline_pct": 0.2091,
+          "production_pct": 0.205,
+          "shift": 0.0041
+        },
+        "Two year": {
+          "baseline_pct": 0.2407,
+          "production_pct": 0.22,
+          "shift": 0.0207
+        }
+      }
+    },
+    {
+      "feature": "payment_method",
+      "max_shift": 0.054225,
+      "severity": "Normal",
+      "categories": {
+        "Bank transfer (automatic)": {
+          "baseline_pct": 0.2192,
+          "production_pct": 0.165,
+          "shift": 0.0542
+        },
+        "Electronic check": {
+          "baseline_pct": 0.3358,
+          "production_pct": 0.315,
+          "shift": 0.0208
+        },
+        "Credit card (automatic)": {
+          "baseline_pct": 0.2161,
+          "production_pct": 0.245,
+          "shift": 0.0289
+        },
+        "Mailed check": {
+          "baseline_pct": 0.2289,
+          "production_pct": 0.275,
+          "shift": 0.0461
+        }
+      }
+    },
+    {
+      "feature": "internet_service",
+      "max_shift": 0.073746,
+      "severity": "Normal",
+      "categories": {
+        "DSL": {
+          "baseline_pct": 0.3437,
+          "production_pct": 0.27,
+          "shift": 0.0737
+        },
+        "No": {
+          "baseline_pct": 0.2167,
+          "production_pct": 0.28,
+          "shift": 0.0633
+        },
+        "Fiber optic": {
+          "baseline_pct": 0.4396,
+          "production_pct": 0.45,
+          "shift": 0.0104
+        }
+      }
+    },
+    {
+      "feature": "tenure_group",
+      "max_shift": 0.115379,
+      "severity": "Warning",
+      "categories": {
+        "0-12m": {
+          "baseline_pct": 0.3104,
+          "production_pct": 0.195,
+          "shift": 0.1154
+        },
+        "24-48m": {
+          "baseline_pct": 0.2263,
+          "production_pct": 0.23,
+          "shift": 0.0037
+        },
+        "60m+": {
+          "baseline_pct": 0.1998,
+          "production_pct": 0.185,
+          "shift": 0.0148
+        },
+        "12-24m": {
+          "baseline_pct": 0.1454,
+          "production_pct": 0.165,
+          "shift": 0.0196
+        },
+        "48-60m": {
+          "baseline_pct": 0.1181,
+          "production_pct": 0.225,
+          "shift": 0.1069
+        }
+      }
+    }
+  ]
+}

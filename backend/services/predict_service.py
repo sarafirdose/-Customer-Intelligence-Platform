@@ -198,3 +198,38 @@ class PredictService:
             "confidence": confidence,
             "latency": proba_res["latency"],
         }
+
+
+# Global singleton instance for helper functions
+_predict_service_instance = None
+
+
+def get_predict_service() -> PredictService:
+    global _predict_service_instance
+    if _predict_service_instance is None:
+        _predict_service_instance = PredictService()
+    return _predict_service_instance
+
+
+def predict_churn(sample: Dict[str, Any]) -> Dict[str, Any]:
+    """Module-level helper to score customer churn."""
+    from backend.ml.feature_store import feature_store
+    full_sample = feature_store.apply_defaults(sample)
+
+    service = get_predict_service()
+    res = service.predict(full_sample)
+    # Ensure standard keys for downstream consumers
+    prob = res.get("probability", 0.0)
+    pred = res.get("prediction", 0)
+    risk = res.get("risk_level", "Low")
+    ltv = float(full_sample.get("monthly_charges", 65.0)) * max(1, float(full_sample.get("tenure_months", 12)))
+    return {
+        "churn_probability": prob,
+        "churn_prediction": pred,
+        "risk_level": risk,
+        "segment": "Standard",
+        "predicted_ltv": ltv,
+        "intelligence_score": round((1.0 - prob) * 100, 1),
+        "recommendations": {"action": "Proactive Retention" if pred == 1 else "Standard Support"},
+    }
+

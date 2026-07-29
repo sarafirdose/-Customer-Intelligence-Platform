@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cip-dashboard
+  labels:
+    app: cip-dashboard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cip-dashboard
+  template:
+    metadata:
+      labels:
+        app: cip-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: cip-dashboard:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8501
+        env:
+        - name: API_URL
+          value: "http://cip-api-service:8000"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 15
+          periodSeconds: 10

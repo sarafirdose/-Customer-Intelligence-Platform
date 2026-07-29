@@ -1,0 +1,134 @@
+# ==============================================================================
+# Customer Intelligence Platform - Production Docker Compose Architecture
+# Services: postgres, redis, api, dashboard, worker, scheduler, nginx
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: cip_postgres_prod
+    environment:
+      POSTGRES_DB: ${DB_NAME:-cip_db}
+      POSTGRES_USER: ${DB_USER:-cip_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-cip_prod_secret_pass}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-cip_user} -d ${DB_NAME:-cip_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: cip_redis_prod
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_prod_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: cip_api_prod
+    environment:
+      - ENV=production
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LOG_JSON=true
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - app_logs:/app/logs
+      - app_artifacts:/app/artifacts
+      - app_reports:/app/reports
+    restart: always
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dashboard
+    container_name: cip_dashboard_prod
+    environment:
+      - API_URL=http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    restart: always
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.worker
+    container_name: cip_worker_prod
+    environment:
+      - ENV=production
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - app_logs:/app/logs
+      - app_artifacts:/app/artifacts
+    restart: always
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.scheduler
+    container_name: cip_scheduler_prod
+    environment:
+      - ENV=production
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - app_logs:/app/logs
+      - app_reports:/app/reports
+    restart: always
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: cip_nginx_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+      - dashboard
+    restart: always
+
+volumes:
+  postgres_prod_data:
+  redis_prod_data:
+  app_logs:
+  app_artifacts:
+  app_reports:

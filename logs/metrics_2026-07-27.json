@@ -1,0 +1,29 @@
+{
+  "collected_at": "2026-07-27T18:35:00.013755+00:00",
+  "uptime_seconds": 1258.7,
+  "cpu_percent": 0.0,
+  "memory_mb": 275.45,
+  "requests": {
+    "total": 1,
+    "errors": 0,
+    "error_rate": 0.0,
+    "per_endpoint": {
+      "/api/v1/customer/0136-IFMYD": 1
+    }
+  },
+  "latency_ms": {
+    "avg": 4527.296,
+    "p50": 4527.296,
+    "p95": 4527.296,
+    "p99": 4527.296
+  },
+  "predictions": {
+    "count": 0,
+    "avg_churn_probability": 0.0,
+    "avg_ltv": 0.0
+  },
+  "batch_jobs": {
+    "count": 0,
+    "total_records": 0
+  }
+}

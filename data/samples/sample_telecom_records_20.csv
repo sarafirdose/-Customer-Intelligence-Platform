@@ -1,0 +1,21 @@
+customer_id,churn_probability,predicted_ltv,projected_future_ltv,customer_segment,rfm_persona,intelligence_score,intelligence_category,primary_recommendation,recommendation_priority,estimated_revenue_saved
+7590-VHVEG,0.8683102361137721,57.87113084252048,4.52711402965523,Loyal Subscribers,Churned Subscribers,20.259077742058064,Poor,Offer Annual Contract Migration Discount,High,22.61254287871798
+5575-GNVDE,0.0929051284926566,1875.7951367141432,0.0,Loyal Subscribers,High-Potential Subscribers,69.18201393581273,Good,Offer Priority Telecom Tech Support,Medium,26.1406482303492
+3668-QPYBK,0.5825478663248348,120.8936477547648,0.0,Growth Subscribers,Churned Subscribers,36.52609526741139,Poor,Offer Annual Contract Migration Discount,High,31.69185144829397
+7795-CFOCW,0.0948218466941132,1898.055433778748,0.0,Loyal Subscribers,High-Potential Subscribers,72.21921539407688,Good,Standard Telecom Subscriber Loyalty Check-in,Low,0.0
+9237-HQITU,0.8804614554150821,143.66192733730782,0.0,Growth Subscribers,Churned Subscribers,23.157258038284866,Poor,Offer Annual Contract Migration Discount,High,56.91995533401381
+9305-CDSKC,0.9106171850500188,811.1021620824856,0.0,High-Value Subscribers,Churned Subscribers,39.64719257088882,Poor,Offer Annual Contract Migration Discount,High,332.3716054305917
+1452-KIOVK,0.6785531612653234,1965.3762531420248,0.0,High-Value Subscribers,At-Risk Subscribers,50.934045575207165,Moderate,Offer Annual Contract Migration Discount,High,600.1255213403928
+6713-OKOMC,0.4332396733753251,299.2868459347592,0.0,Loyal Subscribers,Dormant Subscribers,41.22093742196756,Moderate,Offer Annual Contract Migration Discount,High,58.34832092023785
+7892-POOKP,0.7879110590930934,3015.555484633416,0.0,High-Value Subscribers,At-Risk Subscribers,55.74072686851588,Moderate,Offer Annual Contract Migration Discount,High,1069.1952820431757
+6388-TABGU,0.043081510811835,3422.3406219707226,0.0,High-Value Subscribers,VIP Subscribers,80.45005564661399,Excellent,Offer Priority Telecom Tech Support,Medium,22.115940676082072
+9763-GRSKD,0.3353269857374752,658.2816621479406,0.0,Loyal Subscribers,Dormant Subscribers,50.10262683120433,Moderate,Offer Annual Contract Migration Discount,High,99.33282249044578
+7469-LKBCI,0.0410896139537147,323.3984742439059,157.9871024474986,Loyal Subscribers,Dormant Subscribers,54.908532620543525,Moderate,Standard Telecom Subscriber Loyalty Check-in,Low,0.0
+8091-TTVAX,0.4604733167372591,5775.63810284116,0.0,High-Value Subscribers,Loyal Subscribers,73.55428775944917,Good,Offer Executive Retention & Fiber Upgrade Pack,Critical,2659.52723348936
+0280-XJGEX,0.7031978457836857,5062.4429714661255,0.0,High-Value Subscribers,At-Risk Subscribers,65.8350439584151,Good,Offer Executive Retention & Fiber Upgrade Pack,Critical,3559.89899193774
+5129-JLPIS,0.6596563970544989,2591.720921141089,0.0,High-Value Subscribers,At-Risk Subscribers,58.25234326948656,Moderate,Offer Annual Contract Migration Discount,High,769.3403782548141
+3655-SNQYZ,0.0878724329270402,7697.858569838779,0.0,High-Value Subscribers,VIP Subscribers,96.24157170034206,Excellent,Standard Telecom Subscriber Loyalty Check-in,Low,0.0
+8191-XWSZG,0.0503239610374071,1078.8876948523225,0.0,Loyal Subscribers,High-Potential Subscribers,68.62439656257362,Good,Offer Autopay Billing Discount,Medium,10.858780463897263
+9959-WOFKT,0.1114292993122611,7522.450895346597,0.0,High-Value Subscribers,VIP Subscribers,91.01390221903156,Excellent,Offer Priority Telecom Tech Support,Medium,125.73321485690438
+4190-MFLUW,0.3137288374668758,548.9109816035057,0.0,Loyal Subscribers,Dormant Subscribers,51.81498872527282,Moderate,Offer Annual Contract Migration Discount,High,77.49414185907128
+4183-MYFRB,0.7303258716520388,1955.1663374535249,0.0,High-Value Subscribers,At-Risk Subscribers,49.08580274503616,Moderate,Offer Annual Contract Migration Discount,High,642.5588518314613

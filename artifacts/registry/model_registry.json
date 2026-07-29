@@ -1,0 +1,287 @@
+{
+  "churn": [
+    {
+      "model_name": "churn",
+      "version": "v1.0.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.7806955287437899,
+        "roc_auc": 0.8469219044666616,
+        "precision": 0.5692963752665245,
+        "recall": 0.713903743315508,
+        "f1": 0.6334519572953736,
+        "brier_score": 0.1651701671664447,
+        "mean_latency_ms": 0.0005430802028702878
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "v1.0",
+      "feature_version": "v1.0",
+      "git_commit": "e4b855cad01d4e4eef7da8bcd53cb22c2843cb90",
+      "python_version": "3.12.0",
+      "optimal_threshold": 0.61,
+      "status": "production",
+      "tags": [
+        "initial",
+        "lgbm",
+        "phase3"
+      ],
+      "notes": "Initial churn model trained in Phase 3 on Telco dataset.",
+      "registered_at": "2026-07-27T16:08:16.818119+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.71.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.7954,
+        "roc_auc": 0.8755,
+        "f1": 0.6551,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "ds_20260727",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_fcf2d303).",
+      "registered_at": "2026-07-27T17:41:11.787913+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.117.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8117,
+        "roc_auc": 0.8693,
+        "f1": 0.646,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "ds_20260727",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_73741f8c).",
+      "registered_at": "2026-07-27T17:41:57.228494+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.295.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8022,
+        "roc_auc": 0.8598,
+        "f1": 0.6452,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "ds_20260727",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_3d4bde39).",
+      "registered_at": "2026-07-27T18:01:35.029066+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.875.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8011,
+        "roc_auc": 0.8759,
+        "f1": 0.6507,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "ds_20260727",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_945915fe).",
+      "registered_at": "2026-07-27T18:44:35.620580+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.992.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8143,
+        "roc_auc": 0.8638,
+        "f1": 0.6627,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "ds_20260728",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_78fb699b).",
+      "registered_at": "2026-07-28T04:29:52.842388+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.773.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8062,
+        "roc_auc": 0.8687,
+        "f1": 0.6478,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "ds_20260728",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_a401e72a).",
+      "registered_at": "2026-07-28T11:22:53.589439+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.775.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.7974,
+        "roc_auc": 0.8615,
+        "f1": 0.6468,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7045,
+      "dataset_version": "ds_20260728",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_4eb49d26).",
+      "registered_at": "2026-07-28T13:52:55.369036+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.943.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8038,
+        "roc_auc": 0.8753,
+        "f1": 0.6607,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7045,
+      "dataset_version": "ds_20260728",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_c99f4490).",
+      "registered_at": "2026-07-28T13:55:43.341462+00:00"
+    }
+  ],
+  "ltv": [
+    {
+      "model_name": "ltv",
+      "version": "v1.0.0",
+      "model_type": "regressor",
+      "artifact_path": "artifacts/models/ltv_model.pkl",
+      "metrics": {
+        "rmse": 81.21799034741903,
+        "mae": 56.14266969576852,
+        "mape": 9.193405735372016,
+        "r2": 0.9987320568375377
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "v1.0",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "3.12.0",
+      "optimal_threshold": null,
+      "status": "production",
+      "tags": [
+        "initial",
+        "lightgbm",
+        "phase4"
+      ],
+      "notes": "Initial LTV regression model trained in Phase 4.",
+      "registered_at": "2026-07-27T16:09:05.312921+00:00"
+    }
+  ],
+  "segmentation": [
+    {
+      "model_name": "segmentation",
+      "version": "v1.0.0",
+      "model_type": "clustering",
+      "artifact_path": "artifacts/models/segmentation_model.pkl",
+      "metrics": {
+        "n_clusters": 3,
+        "optimal_k_silhouette": "selected"
+      },
+      "dataset_rows": 7043,
+      "dataset_version": "v1.0",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "3.12.0",
+      "optimal_threshold": null,
+      "status": "production",
+      "tags": [
+        "initial",
+        "kmeans",
+        "phase4"
+      ],
+      "notes": "K-Means segmentation (k=3) trained in Phase 4.",
+      "registered_at": "2026-07-27T16:09:05.322257+00:00"
+    }
+  ]
+}

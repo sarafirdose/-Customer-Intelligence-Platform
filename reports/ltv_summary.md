@@ -1,4 +1,4 @@
-# Customer Lifetime Value (LTV) Prediction Summary
+# Subscriber Lifetime Value (LTV) Prediction Summary
 
 This report documents the LTV prediction regression performance and future forecasts.
 

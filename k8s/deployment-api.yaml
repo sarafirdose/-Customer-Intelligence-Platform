@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cip-api
+  labels:
+    app: cip-api
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: cip-api
+  template:
+    metadata:
+      labels:
+        app: cip-api
+    spec:
+      containers:
+      - name: api
+        image: cip-api:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: cip-config
+        - secretRef:
+            name: cip-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /api/v1/ready
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        volumeMounts:
+        - name: storage-volume
+          mountPath: /app/artifacts
+          subPath: artifacts
+        - name: storage-volume
+          mountPath: /app/logs
+          subPath: logs
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: cip-pvc

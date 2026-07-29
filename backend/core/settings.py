@@ -54,6 +54,20 @@ class Settings(BaseSettings):
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
     LOG_DIR: str = "logs"
     LOG_FILE_NAME: str = "app.log"
+    LOG_JSON: bool = False  # True → emit JSON lines; False → human-readable
+
+    # Security & Rate Limiting
+    RATE_LIMIT_PER_MINUTE: int = 120
+    MAX_REQUEST_SIZE_MB: int = 10
+    ALLOWED_ORIGINS: str = "*"  # Comma-separated list; "*" allows all
+
+    # Monitoring & MLOps
+    METRICS_ENABLED: bool = True
+    REGISTRY_PATH: str = "artifacts/registry/model_registry.json"
+    DRIFT_HISTORY_DIR: str = "reports/drift"
+    DRIFT_WARNING_THRESHOLD: float = 0.10  # PSI warning boundary
+    DRIFT_CRITICAL_THRESHOLD: float = 0.25  # PSI critical boundary
+    SCHEDULER_ENABLED: bool = True
 
     # Allow loading from environment variables/files
     model_config = SettingsConfigDict(

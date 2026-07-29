@@ -1,6 +1,6 @@
-# Customer Intelligence Platform - Architecture Design
+# Subscriber Intelligence Platform - Architecture Design
 
-This document details the system design, request flow, and database schema for the Customer Intelligence Platform (CIP).
+This document details the system design, request flow, and database schema for the Subscriber Intelligence Platform (CIP).
 
 ---
 

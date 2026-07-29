@@ -11,6 +11,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+from backend.core.logger import logger
 from backend.database.database import get_db
 from backend.models.customer import Customer
 from backend.models.contract import Contract
@@ -51,6 +52,7 @@ class UnifiedIntelligenceResponse(BaseModel):
     churn_probability: float
     predicted_ltv: float
     projected_future_ltv: float
+    expected_remaining_lifetime_months: float = 0.0
     customer_segment: str
     rfm_persona: str
     intelligence_score: float
@@ -61,51 +63,109 @@ class BatchIntelligenceRequest(BaseModel):
     customer_ids: List[str]
 
 
+_REPORT_DF_CACHE = None
+_DB_DISABLED = False
+
+def _get_report_df():
+    global _REPORT_DF_CACHE
+    if _REPORT_DF_CACHE is None:
+        csv_path = Path("reports/customer_intelligence.csv")
+        if csv_path.exists():
+            try:
+                import pandas as pd
+                _REPORT_DF_CACHE = pd.read_csv(csv_path)
+            except Exception:
+                _REPORT_DF_CACHE = pd.DataFrame()
+        else:
+            _REPORT_DF_CACHE = pd.DataFrame()
+    return _REPORT_DF_CACHE
+
 def fetch_customer_sample(db: Session, customer_id: str) -> Dict[str, Any]:
     """
-    Fetch a customer from DB and format into a key-value dictionary for ML pipelines.
+    Fetch a customer from DB with fallback to reports CSV or synthetic sample if DB is unavailable.
     """
-    customer = db.query(Customer).filter(Customer.customer_id == customer_id).first()
-    if not customer:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Customer not found with id: {customer_id}"
-        )
+    global _DB_DISABLED
+    customer = None
+    if db is not None and not _DB_DISABLED:
+        try:
+            customer = db.query(Customer).filter(Customer.customer_id == customer_id).first()
+        except Exception as e:
+            _DB_DISABLED = True
+            logger.warning(f"Database query failed ({e}). Disabling DB lookup for session, falling back to CSV lookup.")
 
-    # Resolve relationships
-    con = customer.contract
-    srv = customer.service
-    bil = customer.billing
+    if customer:
+        con = customer.contract
+        srv = customer.service
+        bil = customer.billing
 
-    sample = {
-        "customer_id": customer.customer_id,
-        "gender": customer.gender,
-        "senior_citizen": customer.senior_citizen,
-        "partner": customer.partner,
-        "dependents": customer.dependents,
-        "tenure_months": customer.tenure_months,
-        "contract_type": con.contract_type if con else "Month-to-month",
-        "paperless_billing": con.paperless_billing if con else "No",
-        "payment_method": con.payment_method if con else "Mailed check",
-        "phone_service": srv.phone_service if srv else "No",
-        "multiple_lines": srv.multiple_lines if srv else "No",
-        "internet_service": srv.internet_service if srv else "No",
-        "online_security": srv.online_security if srv else "No",
-        "online_backup": srv.online_backup if srv else "No",
-        "device_protection": srv.device_protection if srv else "No",
-        "tech_support": srv.tech_support if srv else "No",
-        "streaming_tv": srv.streaming_tv if srv else "No",
-        "streaming_movies": srv.streaming_movies if srv else "No",
-        "monthly_charges": float(bil.monthly_charges) if bil else 0.0,
-        "total_charges": float(bil.total_charges) if bil else 0.0,
-    }
+        sample = {
+            "customer_id": customer.customer_id,
+            "gender": customer.gender or "Female",
+            "senior_citizen": customer.senior_citizen or 0,
+            "partner": customer.partner or "No",
+            "dependents": customer.dependents or "No",
+            "tenure_months": customer.tenure_months or 12,
+            "contract_type": con.contract_type if con else "Month-to-month",
+            "paperless_billing": con.paperless_billing if con else "Yes",
+            "payment_method": con.payment_method if con else "Electronic check",
+            "phone_service": srv.phone_service if srv else "Yes",
+            "multiple_lines": srv.multiple_lines if srv else "No",
+            "internet_service": srv.internet_service if srv else "Fiber optic",
+            "online_security": srv.online_security if srv else "No",
+            "online_backup": srv.online_backup if srv else "No",
+            "device_protection": srv.device_protection if srv else "No",
+            "tech_support": srv.tech_support if srv else "No",
+            "streaming_tv": srv.streaming_tv if srv else "No",
+            "streaming_movies": srv.streaming_movies if srv else "No",
+            "monthly_charges": float(bil.monthly_charges) if bil else 70.0,
+            "total_charges": float(bil.total_charges) if bil else 840.0,
+        }
+    else:
+        # Fallback 1: Search in cached reports/customer_intelligence.csv
+        df_report = _get_report_df()
+        found_row = None
+        if not df_report.empty and "customer_id" in df_report.columns:
+            try:
+                matched = df_report[df_report["customer_id"] == customer_id]
+                if not matched.empty:
+                    found_row = matched.iloc[0].to_dict()
+            except Exception:
+                pass
+
+        if found_row:
+            sample = {
+                "customer_id": str(found_row.get("customer_id", customer_id)),
+                "gender": str(found_row.get("gender", "Female")),
+                "senior_citizen": int(found_row.get("senior_citizen", 0)),
+                "partner": str(found_row.get("partner", "No")),
+                "dependents": str(found_row.get("dependents", "No")),
+                "tenure_months": int(found_row.get("tenure_months", 12)),
+                "contract_type": str(found_row.get("contract_type", "Month-to-month")),
+                "paperless_billing": str(found_row.get("paperless_billing", "Yes")),
+                "payment_method": str(found_row.get("payment_method", "Electronic check")),
+                "phone_service": str(found_row.get("phone_service", "Yes")),
+                "multiple_lines": str(found_row.get("multiple_lines", "No")),
+                "internet_service": str(found_row.get("internet_service", "Fiber optic")),
+                "online_security": str(found_row.get("online_security", "No")),
+                "online_backup": str(found_row.get("online_backup", "No")),
+                "device_protection": str(found_row.get("device_protection", "No")),
+                "tech_support": str(found_row.get("tech_support", "No")),
+                "streaming_tv": str(found_row.get("streaming_tv", "No")),
+                "streaming_movies": str(found_row.get("streaming_movies", "No")),
+                "monthly_charges": float(found_row.get("monthly_charges", 70.0)),
+                "total_charges": float(found_row.get("total_charges", 840.0)),
+            }
+        else:
+            # Fallback 2: Generate default sample using feature_store
+            from backend.ml.feature_store import feature_store
+            sample = feature_store.apply_defaults({"customer_id": customer_id})
 
     # Count YES services
     service_cols = [
         "phone_service", "multiple_lines", "online_security", "online_backup",
         "device_protection", "tech_support", "streaming_tv", "streaming_movies"
     ]
-    sample["total_services"] = sum(1 for col in service_cols if str(sample[col]).strip().lower() == "yes")
+    sample["total_services"] = sum(1 for col in service_cols if str(sample.get(col, "No")).strip().lower() == "yes")
 
     return sample
 
@@ -150,7 +210,7 @@ def run_intelligence_calculations(sample: Dict[str, Any]) -> Dict[str, Any]:
     if not seg_model_path.exists():
         seg_model_path = base_dir / "artifacts" / "models" / "segmentation_model.pkl"
 
-    segment = "Silver"  # Fallback default
+    segment = "Growth Subscribers"  # Fallback default
     if seg_model_path.exists():
         seg_pipeline = joblib.load(seg_model_path)
         numeric_cols = ["tenure_months", "monthly_charges", "total_services"]
@@ -161,31 +221,27 @@ def run_intelligence_calculations(sample: Dict[str, Any]) -> Dict[str, Any]:
         
         # Scale and predict cluster raw ID
         cluster_id = int(seg_pipeline.named_steps["kmeans"].predict(seg_pipeline.named_steps["scaler"].transform(X_cluster))[0])
-        # Map cluster ID to name based on historical proxy (Platinum, Gold, Silver, Bronze)
-        # For simplicity, map using a standard modulo index (or typical cluster properties)
-        names = ["Platinum", "Gold", "Silver", "Bronze"]
+        # Map cluster ID to telecom business segment name
+        names = ["High-Value Subscribers", "Loyal Subscribers", "Growth Subscribers", "Budget Subscribers"]
         segment = names[cluster_id % len(names)]
 
-    # 4. RFM Persona
-    # Map RFM Score to Persona on-the-fly
+    # 4. Telecom RFM Persona
     r_score = int(min(5, max(1, round((1.0 - churn_prob) * 5))))
-    # Binned frequency based on tenure (0-12m -> 1, 12-24m -> 2, etc.)
     f_score = min(5, max(1, sample["tenure_months"] // 15 + 1))
-    # Binned monetary based on total charges
     m_score = min(5, max(1, int(sample["total_charges"] // 1500 + 1)))
     
     def get_persona(r, f, m) -> str:
         if r >= 4 and f >= 4 and m >= 4:
-            return "Champions"
+            return "VIP Subscribers"
         elif r >= 3 and f >= 3 and m >= 4:
-            return "Loyal Customers"
+            return "Loyal Subscribers"
         elif r >= 3 and f >= 3 and m < 4:
-            return "Potential Loyalists"
+            return "High-Potential Subscribers"
         elif r <= 2 and f >= 3:
-            return "At Risk"
+            return "At-Risk Subscribers"
         elif r <= 2 and f <= 2:
-            return "Lost Customers"
-        return "About to Sleep"
+            return "Churned Subscribers"
+        return "Dormant Subscribers"
 
     persona = get_persona(r_score, f_score, m_score)
 

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cip-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: cip.example.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: cip-api-service
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cip-dashboard-service
+            port:
+              number: 8501

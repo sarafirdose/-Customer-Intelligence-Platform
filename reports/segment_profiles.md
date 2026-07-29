@@ -2,7 +2,7 @@
 
 This report outlines the characteristics of the customer segment clusters generated via K-Means.
 
-## 🏆 Platinum Customer Segment Profile
+## 🏆 High-Value Subscribers Customer Segment Profile
 - **Customer Count**: 3078 (43.7%)
 - **Average Historical LTV**: $4274.32
 - **Average Monthly Charges**: $88.99
@@ -12,7 +12,7 @@ This report outlines the characteristics of the customer segment clusters genera
 - **Top Payment Method**: Electronic check
 - **Recommended Marketing Campaign**: VIP Loyalty Rewards & High-Touch Service
 
-## 🏆 Gold Customer Segment Profile
+## 🏆 Loyal Subscribers Customer Segment Profile
 - **Customer Count**: 2985 (42.4%)
 - **Average Historical LTV**: $899.99
 - **Average Monthly Charges**: $37.32
@@ -22,7 +22,7 @@ This report outlines the characteristics of the customer segment clusters genera
 - **Top Payment Method**: Mailed check
 - **Recommended Marketing Campaign**: Paperless Auto-pay Incentives & Bundled Services
 
-## 🏆 Silver Customer Segment Profile
+## 🏆 Growth Subscribers Customer Segment Profile
 - **Customer Count**: 980 (13.9%)
 - **Average Historical LTV**: $220.52
 - **Average Monthly Charges**: $72.23

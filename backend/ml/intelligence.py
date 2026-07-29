@@ -194,12 +194,12 @@ def run_customer_segmentation(df: pd.DataFrame) -> Tuple[Any, pd.DataFrame, pd.D
     df_temp["cluster_raw"] = df_labels
 
     cluster_charges = df_temp.groupby("cluster_raw")["total_charges"].median().sort_values(ascending=False)
-    # Platinum, Gold, Silver, Bronze ranking
-    segment_names = ["Platinum", "Gold", "Silver", "Bronze"]
+    # Segment ranking: High-Value, Loyal, Growth, Budget
+    segment_names = ["High-Value Subscribers", "Loyal Subscribers", "Growth Subscribers", "Budget Subscribers"]
     cluster_mapping = {}
     for idx, (cluster_id, _) in enumerate(cluster_charges.items()):
         # Fallback names if optimal_k > 4
-        name = segment_names[idx] if idx < len(segment_names) else f"Bronze Class {idx - 2}"
+        name = segment_names[idx] if idx < len(segment_names) else f"Budget Subscribers Class {idx - 2}"
         cluster_mapping[cluster_id] = name
 
     # Silhouette statistics dataframe
@@ -214,7 +214,7 @@ def run_customer_segmentation(df: pd.DataFrame) -> Tuple[Any, pd.DataFrame, pd.D
 
 def calculate_rfm(df: pd.DataFrame, churn_probs: np.ndarray) -> pd.DataFrame:
     """
-    Perform RFM Analysis.
+    Perform Telecom RFM Analysis.
     Recency: binned from (1.0 - Churn Probability) * 5
     Frequency: binned from tenure_months
     Monetary: binned from total_charges
@@ -224,7 +224,6 @@ def calculate_rfm(df: pd.DataFrame, churn_probs: np.ndarray) -> pd.DataFrame:
 
     # 1. Recency Score (1-5): High stay probability = High recency score
     stay_prob = 1.0 - churn_probs
-    # Bin stay probabilities into quintiles (cut safely)
     try:
         df_rfm["R_score"] = pd.qcut(stay_prob, q=5, labels=[1, 2, 3, 4, 5], duplicates="drop")
     except Exception:
@@ -250,21 +249,21 @@ def calculate_rfm(df: pd.DataFrame, churn_probs: np.ndarray) -> pd.DataFrame:
     # Combined RFM Score
     df_rfm["rfm_score"] = df_rfm["R_score"] * 100 + df_rfm["F_score"] * 10 + df_rfm["M_score"]
 
-    # Assign Personas
+    # Assign Telecom Personas
     def assign_persona(row) -> str:
         r, f, m = row["R_score"], row["F_score"], row["M_score"]
         if r >= 4 and f >= 4 and m >= 4:
-            return "Champions"
+            return "VIP Subscribers"
         elif r >= 3 and f >= 3 and m >= 4:
-            return "Loyal Customers"
+            return "Loyal Subscribers"
         elif r >= 3 and f >= 3 and m < 4:
-            return "Potential Loyalists"
+            return "High-Potential Subscribers"
         elif r <= 2 and f >= 3:
-            return "At Risk"
+            return "At-Risk Subscribers"
         elif r <= 2 and f <= 2:
-            return "Lost Customers"
+            return "Churned Subscribers"
         else:
-            return "About to Sleep"
+            return "Dormant Subscribers"
 
     df_rfm["persona"] = df_rfm.apply(assign_persona, axis=1)
     return df_rfm
@@ -278,7 +277,7 @@ def calculate_intelligence_score(
     max_ltv: float = 8500.0
 ) -> Tuple[float, str]:
     """
-    Calculate composite Customer Intelligence Score (0-100) using configurable weights.
+    Calculate composite Telecom Subscriber Intelligence Score (0-100) using configurable weights.
     Categories: Excellent (>=80), Good (>=60), Moderate (>=40), Poor (>=20), Critical (<20)
     """
     weights_path = ARTIFACT_DIR / "intelligence_weights.json"
@@ -294,18 +293,11 @@ def calculate_intelligence_score(
         }
 
     # Normalize metrics to 0-100
-    # Churn metric: higher score means LOWER churn probability
     c_score = (1.0 - churn_prob) * 100
-
-    # LTV metric: min-max scaled log representation
     log_ltv = np.log1p(predicted_ltv)
     log_max_ltv = np.log1p(max_ltv)
     l_score = min(100.0, (log_ltv / log_max_ltv) * 100)
-
-    # Tenure: max 72 months binned
     t_score = min(100.0, (tenure / 72.0) * 100)
-
-    # Services: max 8 services binned
     s_score = min(100.0, (services_count / 8.0) * 100)
 
     score = (
@@ -339,7 +331,7 @@ def generate_recommendation_details(
     shap_top_contrib: str = ""
 ) -> List[Dict[str, Any]]:
     """
-    Rule-based Hybrid Recommendation Engine with SHAP annotations and estimated revenue saved.
+    Telecom Hybrid Retention Recommendation Engine with SHAP annotations and estimated revenue saved.
     """
     recs = []
 
@@ -351,74 +343,73 @@ def generate_recommendation_details(
     tenure = int(sample.get("tenure_months", sample.get("tenure", 0)))
     total_services = int(sample.get("total_services", 0))
 
-    # 1. Rule 1: High Churn Risk + High Value -> Premium Retention Package
+    # 1. Rule 1: High Churn Risk + High Value -> Executive Retention & Fiber Upgrade Pack
     if churn_prob >= 0.40 and predicted_ltv >= 3500.0:
         revenue_saved = float(churn_prob * predicted_ltv)
         recs.append({
-            "recommendation": "Offer Premium Retention Package",
+            "recommendation": "Offer Executive Retention & Fiber Upgrade Pack",
             "priority": "Critical",
             "confidence": float(churn_prob),
             "reason": [
-                "Customer has High Churn Risk (" + f"{churn_prob*100:.1f}%" + ")",
-                "High customer lifetime valuation (" + f"${predicted_ltv:.2f}" + ")",
-                f"SHAP indicator highlights key churn driver: {shap_top_contrib}" if shap_top_contrib else "High value retention target"
+                "Subscriber has High Churn Risk (" + f"{churn_prob*100:.1f}%" + ")",
+                "High subscriber lifetime valuation (" + f"${predicted_ltv:.2f}" + ")",
+                f"SHAP indicator highlights key churn driver: {shap_top_contrib}" if shap_top_contrib else "High value subscriber retention target"
             ],
             "estimated_revenue_saved": revenue_saved
         })
 
-    # 2. Rule 2: Month-to-Month Contract -> Recommend Annual Contract Upgrade
+    # 2. Rule 2: Month-to-Month Contract -> Offer Annual Contract Migration Discount
     if "month-to-month" in contract.lower():
-        # F1-score threshold improvement
         revenue_saved = float(churn_prob * predicted_ltv * 0.45)
         recs.append({
-            "recommendation": "Recommend Annual Contract Upgrade",
+            "recommendation": "Offer Annual Contract Migration Discount",
             "priority": "High",
             "confidence": 0.85,
             "reason": [
                 "Flexible Month-to-month contract structure is active",
-                "Locking into 1-year contract reduces churn probability by over 70%"
+                "Migrating to 1-year telecom contract reduces churn probability by over 70%"
             ],
             "estimated_revenue_saved": revenue_saved
         })
 
-    # 3. Rule 3: Low Support Add-ons -> Tech Support Promotion
+    # 3. Rule 3: Low Support Add-ons -> Offer Priority Telecom Tech Support
     if "no" in tech_support.lower() and "no" not in internet.lower():
         revenue_saved = float(churn_prob * predicted_ltv * 0.15)
         recs.append({
-            "recommendation": "Offer Proactive Tech Support Promotion",
+            "recommendation": "Offer Priority Telecom Tech Support",
             "priority": "Medium",
             "confidence": 0.70,
             "reason": [
-                "High-speed internet is active but customer lacks Tech Support services",
-                "Support subscribers show a 60% reduction in attrition rates"
+                "High-speed internet is active but subscriber lacks Tech Support add-ons",
+                "Tech support subscribers exhibit a 60% reduction in attrition rates"
             ],
             "estimated_revenue_saved": revenue_saved
         })
 
-    # 4. Rule 4: Low service bundling -> Service Bundling Promotion
+    # 4. Rule 4: Low service bundling -> Offer Multi-Service OTT & Security Bundle
     if total_services <= 2 and "no" not in internet.lower():
         revenue_saved = float(churn_prob * predicted_ltv * 0.10)
         recs.append({
-            "recommendation": "Recommend Service Bundling Upgrade",
+            "recommendation": "Offer Multi-Service OTT & Security Bundle",
             "priority": "Low",
             "confidence": 0.60,
             "reason": [
                 f"Active account has low service density ({total_services} services)",
-                "Bundling online backup or security services creates account lock-in"
+                "Bundling OTT entertainment, online backup, or security creates subscriber stickiness"
             ],
             "estimated_revenue_saved": revenue_saved
         })
 
-    # 5. Rule 5: Manual payment methods -> Automatic Billing Setup
+    # 5. Rule 5: Manual payment methods -> Offer Autopay Billing Discount
     if is_auto == 0:
         revenue_saved = float(churn_prob * predicted_ltv * 0.20)
         recs.append({
-            "recommendation": "Automatic Billing Setup Promotion",
+            "recommendation": "Offer Autopay Billing Discount",
             "priority": "Medium",
             "confidence": 0.75,
             "reason": [
                 "Manual billing payment method is active",
-                "Auto-pay customers exhibit a 66% lower attrition rate than manual check payers"
+                "Autopay subscribers exhibit a 66% lower attrition rate than manual check payers"
             ],
             "estimated_revenue_saved": revenue_saved
         })
@@ -426,10 +417,10 @@ def generate_recommendation_details(
     # Default if no rules triggered
     if not recs:
         recs.append({
-            "recommendation": "Standard Customer Loyalty Outreach",
+            "recommendation": "Standard Telecom Subscriber Loyalty Check-in",
             "priority": "Low",
             "confidence": 0.50,
-            "reason": ["Account is highly stable and active"],
+            "reason": ["Subscriber account is highly stable and active"],
             "estimated_revenue_saved": 0.0
         })
 
