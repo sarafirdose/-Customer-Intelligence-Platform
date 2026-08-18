@@ -878,6 +878,81 @@
       ],
       "notes": "Retrained automatically via pipeline (run_id=retrain_538f8f87).",
       "registered_at": "2026-08-17T09:05:03.579613+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.706.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.802,
+        "roc_auc": 0.8621,
+        "f1": 0.6535,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7045,
+      "dataset_version": "ds_20260818",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_134a7399).",
+      "registered_at": "2026-08-18T11:48:26.086287+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.360.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8029,
+        "roc_auc": 0.8772,
+        "f1": 0.6508,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7045,
+      "dataset_version": "ds_20260818",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_002f77ce).",
+      "registered_at": "2026-08-18T11:59:20.975660+00:00"
+    },
+    {
+      "model_name": "churn",
+      "version": "v1.746.0",
+      "model_type": "classifier",
+      "artifact_path": "artifacts/models/best_model.pkl",
+      "metrics": {
+        "accuracy": 0.8021,
+        "roc_auc": 0.8641,
+        "f1": 0.6545,
+        "brier_score": 0.158
+      },
+      "dataset_rows": 7045,
+      "dataset_version": "ds_20260818",
+      "feature_version": "v1.0",
+      "git_commit": "unknown",
+      "python_version": "unknown",
+      "optimal_threshold": null,
+      "status": "staging",
+      "tags": [
+        "test",
+        "continuous_retraining"
+      ],
+      "notes": "Retrained automatically via pipeline (run_id=retrain_de678253).",
+      "registered_at": "2026-08-18T12:39:06.710924+00:00"
     }
   ],
   "ltv": [

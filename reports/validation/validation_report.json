@@ -1,6 +1,6 @@
 {
   "status": "failed",
-  "error_message": "{\n    \"DATA\": {\n        \"SERIES_CONTAINS_DUPLICATES\": [\n            {\n                \"schema\": null,\n                \"column\": \"customer_id\",\n                \"check\": \"field_uniqueness\",\n                \"error\": \"series 'customer_id' contains duplicate values:0    2222-MOCK1    2222-MOCKName: customer_id, dtype: str\"\n            }\n        ]\n    }\n}",
+  "error_message": "{\n    \"DATA\": {\n        \"SERIES_CONTAINS_DUPLICATES\": [\n            {\n                \"schema\": null,\n                \"column\": \"customer_id\",\n                \"check\": \"field_uniqueness\",\n                \"error\": \"series 'customer_id' contains duplicate values:0    2222-MOCK1    2222-MOCKName: customer_id, dtype: object\"\n            }\n        ]\n    }\n}",
   "failures_count": 2,
   "failures": [
     {

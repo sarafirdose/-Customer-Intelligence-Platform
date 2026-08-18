@@ -1,6 +1,6 @@
 # Feature Drift Report
 
-**Run Date**: 2026-08-17T09:04:44.370883+00:00
+**Run Date**: 2026-08-18T12:38:58.525660+00:00
 **Dataset Rows**: 200
 **Overall Severity**: 🚨 Critical
 **PSI Warning Threshold**: 0.1
@@ -28,35 +28,35 @@
 | Category | Baseline % | Production % | Shift |
 |---|---|---|---|
 | Month-to-month | 55.02% | 57.50% | 0.0248 |
-| Two year | 24.07% | 22.00% | 0.0207 |
 | One year | 20.91% | 20.50% | 0.0041 |
+| Two year | 24.07% | 22.00% | 0.0207 |
 
 ### payment_method — ✅ Normal (max shift: 0.0542)
 
 | Category | Baseline % | Production % | Shift |
 |---|---|---|---|
-| Mailed check | 22.89% | 27.50% | 0.0461 |
-| Credit card (automatic) | 21.61% | 24.50% | 0.0289 |
 | Electronic check | 33.58% | 31.50% | 0.0208 |
 | Bank transfer (automatic) | 21.92% | 16.50% | 0.0542 |
+| Mailed check | 22.89% | 27.50% | 0.0461 |
+| Credit card (automatic) | 21.61% | 24.50% | 0.0289 |
 
 ### internet_service — ✅ Normal (max shift: 0.0737)
 
 | Category | Baseline % | Production % | Shift |
 |---|---|---|---|
-| No | 21.67% | 28.00% | 0.0633 |
-| Fiber optic | 43.96% | 45.00% | 0.0104 |
 | DSL | 34.37% | 27.00% | 0.0737 |
+| Fiber optic | 43.96% | 45.00% | 0.0104 |
+| No | 21.67% | 28.00% | 0.0633 |
 
 ### tenure_group — ⚠️ Warning (max shift: 0.1154)
 
 | Category | Baseline % | Production % | Shift |
 |---|---|---|---|
-| 60m+ | 19.98% | 18.50% | 0.0148 |
-| 12-24m | 14.54% | 16.50% | 0.0196 |
-| 48-60m | 11.81% | 22.50% | 0.1069 |
-| 24-48m | 22.63% | 23.00% | 0.0037 |
 | 0-12m | 31.04% | 19.50% | 0.1154 |
+| 48-60m | 11.81% | 22.50% | 0.1069 |
+| 12-24m | 14.54% | 16.50% | 0.0196 |
+| 60m+ | 19.98% | 18.50% | 0.0148 |
+| 24-48m | 22.63% | 23.00% | 0.0037 |
 
 ---
 
