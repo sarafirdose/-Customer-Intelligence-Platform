@@ -532,6 +532,29 @@ class AIRetentionAgentEngine:
             return IntentCategory.GLOBAL_CHURN_DRIVERS, {}
 
         # 7. Conceptual Churn Queries ("whats churn", "what is chrunk", "explain churn", "how is it calculated here")
+        # 6. Executive Report & Portfolio Summaries ("give full report of churn", "report of churn", "give report", "full report", "executive briefing")
+        if any(
+            term in q
+            for term in [
+                "report",
+                "summary",
+                "briefing",
+                "overview",
+                "full report",
+                "give full report",
+                "report of churn",
+                "report of chrun",
+                "churn report",
+                "churn summary",
+                "portfolio report",
+                "executive report",
+                "today's report",
+                "today report",
+            ]
+        ) or q in ["summary", "report", "update", "overview", "status"]:
+            return IntentCategory.EXECUTIVE_REPORT, {}
+
+        # 7. Conceptual Churn Queries ONLY for explicit definitions ("what is churn", "whats churn", "define churn")
         if any(
             term in q
             for term in [
@@ -541,12 +564,17 @@ class AIRetentionAgentEngine:
             ]
         ):
             return IntentCategory.CONCEPTUAL_CHURN, {"mode": "calculation"}
-        if bool(re.search(r"(chru|thru|churn|attrit|leaving|cancel)", q)) or q in [
+        if q in [
             "whats churn",
             "what is churn",
             "explain churn",
             "what is chrunk",
-        ]:
+            "define churn",
+            "meaning of churn",
+        ] or (
+            bool(re.search(r"\b(what is|whats|define|meaning of)\s*(churn|chrun|attrition)\b", q))
+            and not any(w in q for w in ["report", "data", "number", "give", "show", "summary"])
+        ):
             return IntentCategory.CONCEPTUAL_CHURN, {"mode": "definition"}
 
         # 7. Conceptual LTV Queries ("what is ltv", "whats ltv", "explain ltv")
@@ -1499,13 +1527,22 @@ class AIRetentionAgentEngine:
             final_response = fallback_response
             llm_engine_used = "Grounded Analyst Engine"
         else:
+            history_context = ""
+            if state.turns:
+                recent_turns = state.turns[-6:]  # Include last 3 conversation turns
+                history_context = "Recent Conversation History:\n" + "\n".join(
+                    [f"{t['role'].upper()}: {t['content']}" for t in recent_turns]
+                ) + "\n\n"
+
             system_prompt = (
-                "You are RETAINAI's Customer Intelligence Analyst. "
-                "Answer the user's question directly, concisely, and naturally. "
-                "If provided with structured tool data, use ONLY the grounded numbers. Never invent numbers."
+                "You are RETAINAI's Customer Intelligence Analyst & Retention Growth Partner. "
+                "Answer the user's question directly, accurately, and conversationally. "
+                "Use the provided grounded RETAINAI customer database numbers. Never invent numbers. "
+                "Maintain context from the recent conversation history."
             )
             user_prompt = (
                 f"Current Page Context: {current_page}\n"
+                f"{history_context}"
                 f"User Query: {query}\n\n"
                 f"Grounding Data:\n{json.dumps(tool_data, indent=2, default=str)}"
             )
